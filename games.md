@@ -80,7 +80,7 @@ If you would like to try it out, an executable can be found here: [Card game](ht
 This is a simple tactics RPG. It has everything a tactics game needs such as turn based combat, a working grid system, AI, and pathfinding.
 
 
- ![Tactics]({{ "/assets/tactics.jpg" | absolute_url }})
+ ![Tactics]({{ "/assets/tactics.gif" | absolute_url }})
 
 
  There is no build of this. However you can build it yourself with Unity with the source here: [Source](https://github.com/kds14/tatics-rpg). There is some better code that can be used for tactics games in a library that I am writing here: [Game Dev Library](https://github.com/kds14/GameLibrary).
