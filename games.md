@@ -69,6 +69,9 @@ This game is still in its early stages but it still has some solid underlying fe
  ![Card game]({{ "/assets/card_game.png" | absolute_url }})
 
 
+ ![Card game]({{ "/assets/card_game.gif" | absolute_url }})
+
+
 If you would like to try it out, an executable can be found here: [Card game](https://pcakes215.itch.io/card-game). Read the description on the page to see how to test it.
 
 
