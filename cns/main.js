@@ -112,19 +112,19 @@ update(gstate);
 function draw_resource_bar(state) {
     var money_rate = "";
     if (state.upgrades.bus_anal)
-        money_rate = " ($" + (state.stats.money_avg).toFixed(2) + "/fr)";
+        money_rate = " ($" + (state.stats.money_avg).toFixed(2) + "/s)";
     document.getElementById("money-stat").innerHTML =
         "Money: $" + Math.floor(state.res.money) + money_rate;
-    document.getElementById("worker-stat").innerHTML =
-        "Labor: " + state.res.labor;
+    /*document.getElementById("worker-stat").innerHTML =
+        "Labor: " + state.res.labor;*/
     document.getElementById("worker-eff").innerHTML =
         "Efficiency: " + (state.res.efficiency * 100).toFixed(2) + "%";
     document.getElementById("orders-stat").innerHTML =
-        "Pending Orders: " + Math.floor(state.res.orders);
+        "Pending Orders: " + Math.floor(state.res.orders) + " / " + Math.floor(state.res.pack_max);
     document.getElementById("pack-rec").innerHTML =
-        "Received Packages: " + Math.floor(state.res.pack_rec);
+        "Received Packages: " + Math.floor(state.res.pack_rec) + " / " + Math.floor(state.res.pack_max);
     document.getElementById("pack-stored").innerHTML =
-        "Stored Packages: " + Math.floor(state.res.pack_stored);
+        "Stored Packages: " + Math.floor(state.res.pack_stored) + " / " + Math.floor(state.res.pack_max);
     document.getElementById("pack-shipped").innerHTML =
         "Shipped Packages: " + Math.floor(state.res.pack_shipped_full);
     if (state.upgrades.marketing > 0) {
@@ -600,6 +600,7 @@ function sci_manag_buy() {
         gstate.upgrades.sci_manag = true;
         gstate.res.eff_bonus += 10;
         gstate.res.marketer_base_bonus += 5;
+        gstate.res.money -= gstate.prices.sci_manag;
         state_update(gstate);
     }
 }
@@ -666,7 +667,7 @@ function buy_belt() {
 function buy_robocaller() {
     if (gstate.res.money >= gstate.prices.robocallers) {
         gstate.res.money -= gstate.prices.robocallers;
-        gstate.prices.belt = Math.round(gstate.prices.robocallers * 3);
+        gstate.prices.robocallers = Math.round(gstate.prices.robocallers * 3);
         gstate.res.robocallers += 1;
         state_update(gstate);
     }
