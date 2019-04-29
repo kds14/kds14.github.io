@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<header><title>TITLE</title></header>
+<body>
+<div class="grid">
+	<div id="resource-bar">
+		<div id="money-stat"></div>
+		<div id="worker-stat" title="Amount of labor from workers and machines"></div>
+		<div id="worker-eff" title="Effectiveness of storing and shipping packages"></div>
+		<div id="marketing"></div>
+		<div></div>
+		<div></div>
+		<div id="pack-rec" title="Packages waiting to be stored"></div>
+		<div id="pack-stored"></div>
+		<div id="orders-stat"></div>
+		<div id="pack-shipped"></div>
+		<div></div>
+		<div></div>
+		<div id="research-points"></div>
+	</div>
+	<div id="decision-bar">
+		<div class="centered-text">Decisions</div>
+		<div style="display:none" id="stor-pol">
+			Storage Policy
+			<select id="stor-pol-sel" class="cbtn" onchange="stor_pol_sel_change()">
+			  <option value="pop">Popularity</option>
+			  <option id="inv-sel" style="display:none" value="inv">Maximum Inventory</option>
+			  <option id="coi-sel" style="display:none" value="coi">Cube per Order Index</option>
+			</select>
+		</div>
+	<div style="display:none" id="sort-pol">
+				Sorting Policy
+				<select id="sort-pol-sel" class="cbtn" onchange="sort_pol_sel_change()">
+				  <option value="after">sort-after-pick</option>
+				  <option id="while-sel" style="display:none" value="while">sort-while-pick</option>
+				</select>
+			</div>
+		</div>
+	<div id="worker-area">
+		<div class="centered-text">Employees</div>
+		<div id="unskilled-tab" title="Store and ship packages">
+			<div id="unskilled-text">
+			Unskilled Workers: 0
+			</div>
+			<button id="unskilled-hire" class="cbtn" onclick="unskilled_hire()">
+			Hire
+			</button>
+			<button id="unskilled-fire" class="cbtn" onclick="unskilled_fire()">Fire </button>
+		</div>
+		<div id="manager-tab" style="display:none" title="Increases efficiency">
+			<div id="manager-text">
+			Managers: 0
+			</div>
+			<button id="manager-hire" class="cbtn" onclick="manager_hire()">
+			Hire
+			</button>
+			<button id="manager-fire" class="cbtn" onclick="manager_fire()">
+			Fire
+			</button>
+		</div>
+		<div id="marketer-tab" style="display:none" title="Increases marketing efficiency">
+			<div id="marketer-text">
+			Marketers: 0
+			</div>
+			<button id="marketer-hire" class="cbtn" onclick="marketer_hire()">
+			Hire
+			</button>
+			<button id="marketer-fire" class="cbtn" onclick="marketer_fire()">
+			Fire
+			</button>
+		</div>
+		<div id="researcher-tab" style="display:none" title="Generates research points">
+			<div id="researcher-text">
+			</div>
+			<button id="res-hire" class="cbtn" onclick="res_hire()">
+			Hire
+			</button>
+			<button id="res-fire" class="cbtn" onclick="res_fire()">
+			Fire
+			</button>
+		</div>
+	</div>
+	<div id="upgrade-area">
+		<div class="centered-text">Research
+		</div>
+		<div id="basic-res-1" title="Unlocks managers">
+			<div id="basic-res-1-text"></div>
+			<button id="basic-res-1-buy" class="cbtn" onclick="basic_research_1()">Buy</button>
+		</div>
+		<div id="marketing1" style="display:none" title="Unlocks marketers and increases orders">
+			<div id="mark-1-text"></div>
+			<button id="mark1-buy" class="cbtn" onclick="marketing_1()">Buy</button>
+		</div>
+		<div id="marketing2" style="display:none" title="Improves marketer effectiveness and amount of orders received.">
+			<div id="mark-2-text"></div>
+			<button class="cbtn" onclick="marketing_2()">Buy</button>
+		</div>
+		<div id="scientific-manag" style="display:none" title="Improves managers and unlocks new upgrades">
+			<div id="sci-manag-text"></div>
+			<button id="sci-manag-buy" class="cbtn" onclick="sci_manag_buy()">Buy</button>
+		</div>
+		<div id="op-res" style="display:none" title="Unlocks Researcher and research points">
+			<div id="op-res-text"></div>
+			<button class="cbtn" onclick="op_res_buy()">Buy</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="automation1" style="display:none" title="Unlocks new automation research and conveyer belts">
+			<div id="automation1-text"></div>
+			<button class="cbtn" onclick="automation1_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="bus-anal" style="display:none" title="Unlocks new statistics about how the business is running">
+			<div id="bus-anal-text"></div>
+			<button class="cbtn" onclick="bus_anal_buy()">Buy</button>
+		</div>
+		<div id="pop-pol" style="display:none" title="Unlocks popularity storage policy">
+			<div id="pop-pol-text"></div>
+			<button class="cbtn" onclick="pop_pol_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="inv-pol" style="display:none" title="Unlocks maximum inventory storage policy">
+			<div id="inv-pol-text"></div>
+			<button class="cbtn" onclick="inv_pol_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="coi-pol" style="display:none" title="Unlocks cube per order index storage policy">
+			<div id="coi-pol-text"></div>
+			<button class="cbtn" onclick="coi_pol_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="after-pol" style="display:none" title="Unlocks sort-after-pick sorting policy">
+			<div id="after-pol-text"></div>
+			<button class="cbtn" onclick="after_pol_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="while-pol" style="display:none" title="Unlocks sort-while-pick sorting policy">
+			<div id="while-pol-text"></div>
+			<button class="cbtn" onclick="while_pol_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="warehouse-op" style="display:none" title="Unlocks warehouse operations research">
+			<div id="wh-op-text"></div>
+			<button class="cbtn" onclick="wh_op_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+<div id="imp-warehouse-op" style="display:none" title="Unlocks warehouse additional operations research">
+			<div id="imp-wh-op-text"></div>
+			<button class="cbtn" onclick="imp_wh_op_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+
+		<div id="computer-systems" style="display:none" title="Unlocks new computer system research">
+			<div id="comp-sys-text"></div>
+			<button class="cbtn" onclick="comp_sys_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="whms" style="display:none" title="Unlocks warehouse management systems">
+			<div id="whms-text"></div>
+			<button class="cbtn" onclick="whms_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+		<div id="auto-ad" style="display:none" title="Unlocks robocaller system">
+			<div id="auto-ad-text"></div>
+			<button class="cbtn" onclick="auto_ad_res()">Research</button>
+		<div class="current-res" style="display:none">
+		<div class="res-prog"><div class="res-bar"></div> </div>
+		</div>
+		</div>
+	</div>
+	<div id="equip-area">
+		<div class="centered-text">Upgrades</div>
+		<div id="storage-cap">
+			<div id="storage-cap-text"></div>
+			<button class="cbtn" onclick="buy_storage_cap()">Upgrade</button>
+		</div>
+		<div id="worker-cap">
+			<div id="worker-cap-text"></div>
+			<button class="cbtn" onclick="buy_worker_cap()">Upgrade</button>
+		</div>
+		<div id="belt" style="display:none">
+			<div id="belt-text"></div>
+			<button class="cbtn" onclick="buy_belt()">Upgrade</button>
+		</div>
+		<div id="robocaller" style="display:none">
+			<div id="robocaller-text"></div>
+			<button class="cbtn" onclick="buy_robocaller()">Upgrade</button>
+		</div>
+	</div>
+</div>
+</body>
+<script src="./main.js"></script>
+</html>
