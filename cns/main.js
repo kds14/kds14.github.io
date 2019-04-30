@@ -56,14 +56,16 @@ var gstate = {
         auto1: 500,
         auto1_rp: 100,
         belt: 5000,
-        worker_cap: 200,
-        storage_cap: 200,
+        worker_cap: 50,
+        storage_cap: 100,
         wh_op: 500,
         imp_wh_op: 50000,
         wh_op_rp: 200,
         imp_wh_op_rp: 1000,
         comp_sys_rp: 500,
         comp_sys: 10000,
+        surv: 150000,
+        surv_rp: 5000,
         bus_anal: 1000,
         auto_ad_rp: 1000,
         auto_ad: 20000,
@@ -97,7 +99,8 @@ var gstate = {
         coi_pol: false,
         after_pol: false,
         while_pol: false,
-        whms: false
+        whms: false,
+        surv: false
     },
     func: {
         res_finish: null
@@ -148,7 +151,7 @@ function draw_resource_bar(state) {
         "Worker Capacity: " + state.res.worker_max + " [$" + state.prices.worker_cap + "]";
 }
 function draw_worker_area(state) {
-    var unsk_name = state.upgrades.whms ? "Operators " : "Unskilled Workers ";
+    var unsk_name = "Unskilled Workers ";
     document.getElementById("unskilled-text").innerHTML =
         unsk_name + state.res.unsk_w;
     document.getElementById("manager-text").innerHTML =
@@ -178,6 +181,8 @@ function init_upgrade_draw(state) {
         "Automation Research I [$" + state.prices.auto1 + "]";
     document.getElementById("comp-sys-text").innerHTML =
         "Computer Systems Research [$" + state.prices.comp_sys + "]";
+    document.getElementById("surv-text").innerHTML =
+        "Worker Surveillance [$" + state.prices.surv + "]";
     document.getElementById("whms-text").innerHTML =
         "Warehouse Management Systems [$" + state.prices.whms + "]";
     document.getElementById("bus-anal-text").innerHTML =
@@ -458,9 +463,22 @@ function comp_sys_res() {
         gstate.res.money -= gstate.prices.comp_sys;
     }
 }
+function surv_res_finish(state) {
+    state.upgrades.surv = true;
+    document.getElementById("surv").style.display = "none";
+    state.res.eff_bonus += 5;
+    state_update(state);
+}
+function surv_res() {
+    if (gstate.res.money >= gstate.prices.surv &&
+        start_research(gstate, gstate.prices.surv_rp, "Worker Surveillance", surv_res_finish, "surv")) {
+        gstate.res.money -= gstate.prices.surv;
+    }
+}
 function whms_res_finish(state) {
     state.upgrades.whms = true;
     document.getElementById("whms").style.display = "none";
+    document.getElementById("surv").style.display = "inline";
     state.res.eff_bonus += 5;
     state_update(state);
 }
@@ -675,17 +693,17 @@ function buy_robocaller() {
 function buy_storage_cap() {
     if (gstate.res.money >= gstate.prices.storage_cap) {
         gstate.res.money -= gstate.prices.storage_cap;
-        gstate.prices.storage_cap = Math.round(gstate.prices.storage_cap * 1.5);
-        gstate.res.pack_max = Math.round(gstate.res.pack_max * 1.75);
+        gstate.prices.storage_cap = Math.round(gstate.prices.storage_cap * 1.2);
+        gstate.res.pack_max = gstate.res.pack_max + 10;
         state_update(gstate);
     }
 }
 function buy_worker_cap() {
     if (gstate.res.money >= gstate.prices.worker_cap) {
         gstate.res.money -= gstate.prices.worker_cap;
-        var m = 3.0;
+        var m = 1.2;
         gstate.prices.worker_cap = Math.round(gstate.prices.worker_cap * m);
-        gstate.res.worker_max = Math.round(gstate.res.worker_max * 1.5);
+        gstate.res.worker_max = gstate.res.worker_max + 1;
         state_update(gstate);
     }
 }
